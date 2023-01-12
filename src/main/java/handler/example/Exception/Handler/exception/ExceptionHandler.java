@@ -3,11 +3,10 @@ package handler.example.Exception.Handler.exception;
 import handler.example.Exception.Handler.custom.StudentError;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 
-@RestControllerAdvice
-public class ExceptionHandler extends ResponseEntityExceptionHandler {
+@ControllerAdvice
+public class ExceptionHandler {
 
     @org.springframework.web.bind.annotation.ExceptionHandler
     public ResponseEntity<StudentError> handleException(UserNotFoundException exc) {
@@ -16,8 +15,10 @@ public class ExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     @org.springframework.web.bind.annotation.ExceptionHandler
-    public ResponseEntity<StudentError> handleException(Exception exc) {
-        StudentError se = StudentError.builder().code(HttpStatus.BAD_REQUEST.value()).message(exc.getMessage()).build();
+    public ResponseEntity<StudentError> handleException(Exception ex) {
+        StudentError se = StudentError.builder().code(HttpStatus.BAD_REQUEST.value()).message(ex.getMessage()).build();
         return new ResponseEntity<>(se, HttpStatus.BAD_REQUEST);
     }
+
+
 }
